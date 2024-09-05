@@ -7,10 +7,28 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <form id="searchForm">
-    <input type="text" id="searchInput" placeholder="Rechercher une recette...">
-    <button type="submit">Rechercher</button>
-  </form>
+    <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Rechercher une recette...">
+        <button type="submit">Rechercher</button>
+      </form>
+      
+      <div id="filters">
+        <label>
+          <input type="checkbox" class="filter-checkbox" value="vegetarian"> Vegetarian
+        </label>
+        <label>
+          <input type="checkbox" class="filter-checkbox" value="vegan"> Vegan
+        </label>
+        <label>
+          <input type="checkbox" class="filter-checkbox" value="glutenFree"> Gluten-Free
+        </label>
+        <label>
+          <input type="checkbox" class="filter-checkbox" value="dairyFree"> Dairy-Free
+        </label>
+        <label>
+          <input type="checkbox" class="filter-checkbox" value="veryHealthy"> Very Healthy
+        </label>
+      </div>
 
   <div id="results"></div>
 
