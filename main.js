@@ -1,5 +1,5 @@
 // La clé API Spoonacular
-const apiKey = '2be4e9cae6df489392d6f4695853d35e';
+const apiKey = '3b1c9a54f9eb4a2c8cdd15fb43c53537';
 
 // Fonction pour rechercher des recettes avec un mot-clé et des filtres
 async function searchRecipes(query, filters) {
@@ -91,8 +91,9 @@ function displayRecipes(recipes) {
 
   recipes.forEach(recipe => {
     const recipeDiv = document.createElement('div');
+    recipeDiv.classList.add('recipe'); // Ajouter la classe 'recipe'
     recipeDiv.innerHTML = `
-      <h3>${recipe.title}</h3>
+      <h3 class="recipe-title">${recipe.title}</h3>
       <img src="${recipe.image}" alt="${recipe.title}">
     `;
 
@@ -105,8 +106,33 @@ function displayRecipes(recipes) {
   });
 }
 
+
 // Fonction pour afficher un message d'erreur
 function displayError(message) {
   const resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = `<p>${message}</p>`;
 }
+
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Simuler la recherche
+    const searchQuery = document.getElementById('searchInput').value;
+    
+    // Supprime le texte par défaut (message)
+    const noResultsMessage = document.getElementById('no-results-message');
+    
+    if (searchQuery.trim() !== "") {
+        // Simule des résultats (à remplacer avec les vrais résultats)
+        document.getElementById('results').innerHTML = ''; // Vide les résultats
+        noResultsMessage.style.display = 'none'; // Masquer le message
+
+        // Ici, tu peux ajouter le code qui insère les recettes
+        // Exemple :
+        // let recipe = `<div class="recipe"><p>Recette pour: ${searchQuery}</p></div>`;
+        // document.getElementById('results').innerHTML = recipe;
+    } else {
+        // Si le champ est vide, on réaffiche le message par défaut
+        noResultsMessage.style.display = 'block';
+    }
+});
