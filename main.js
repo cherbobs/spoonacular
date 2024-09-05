@@ -84,27 +84,43 @@ document.getElementById('searchForm').addEventListener('submit', function(e) {
   searchRecipes(query, filters);
 });
 
-// Fonction pour afficher les recettes
-function displayRecipes(recipes) {
-  const resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = '';  // Vider les résultats précédents
-
-  recipes.forEach(recipe => {
-    const recipeDiv = document.createElement('div');
-    recipeDiv.classList.add('recipe'); // Ajouter la classe 'recipe'
-    recipeDiv.innerHTML = `
-      <h3 class="recipe-title">${recipe.title}</h3>
-      <img src="${recipe.image}" alt="${recipe.title}">
-    `;
-
-    // Rediriger vers une nouvelle page avec l'ID de la recette dans l'URL
-    recipeDiv.addEventListener('click', function() {
-      window.location.href = `recipeDetails.html?id=${recipe.id}`;
-    });
-
-    resultsDiv.appendChild(recipeDiv);
-  });
+async function getRecipeDetails(recipeId) {
+  const apiKey = '3b1c9a54f9eb4a2c8cdd15fb43c53537';
+  try {
+      const response = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${apiKey}`);
+      const recipe = await response.json();
+      return recipe;
+  } catch (error) {
+      console.error('Erreur lors de la récupération des détails :', error);
+  }
 }
+
+async function displayRecipes(recipes) {
+const resultsDiv = document.getElementById('results');
+resultsDiv.innerHTML = '';  // Vider les résultats précédents
+
+for (const recipe of recipes) {
+  // Obtenir les détails de chaque recette
+  const detailedRecipe = await getRecipeDetails(recipe.id);
+
+  const recipeDiv = document.createElement('div');
+  recipeDiv.classList.add('recipe');
+  recipeDiv.innerHTML = `
+    <h3 class="recipe-title">${detailedRecipe.title}</h3>
+    <img src="${detailedRecipe.image}" alt="${detailedRecipe.title}">
+    <p><strong>Prix :</strong> ${detailedRecipe.pricePerServing ? `$${(detailedRecipe.pricePerServing / 100).toFixed(2)}` : "Inconnu"} par portion</p>
+    <p><strong>Temps de préparation :</strong> ${detailedRecipe.readyInMinutes ? `${detailedRecipe.readyInMinutes} minutes` : "Inconnu"}</p>
+  `;
+
+  recipeDiv.addEventListener('click', function() {
+    window.location.href = `recipeDetails.html?id=${detailedRecipe.id}`;
+  });
+
+  resultsDiv.appendChild(recipeDiv);
+}
+}
+
+
 
 
 // Fonction pour afficher un message d'erreur
