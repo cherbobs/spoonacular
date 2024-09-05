@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  #results {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  #results div {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 200px;
+  }
+  
+  img {
+    width: 100%;
+  }
+  
